@@ -1,3 +1,3 @@
-#! /bin/bash
-
-echo "Created project for gambler simulation"
+initialAmount=100
+betPerGame=1
+echo "Gambler Starts With $initialAmount $ and bets $betPerGame $ per game"
