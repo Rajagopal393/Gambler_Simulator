@@ -8,10 +8,35 @@ maxAmount=150
 minAmount=50
 wonAmount=0
 lostAmount=0
+winDaysCounter=0
+lostDaysCounter=0
 declare -A luckyDayCollection
 declare -A unLuckyDayCollection
 indexOfLuckyArray=0
 indexOfUnLuckyArray=0
+
+luckiestUnluckiestDay(){
+
+	max="$1"
+	min="$2"
+
+	for((l=1;l<${#luckyDayCollection[@]};l++))
+	do
+		if [ $max -lt ${luckyDayCollection[$l]} ]
+		then
+			max=${luckyDayCollection[$l]}
+		fi
+
+		if [ $min -gt ${unLuckyDayCollection[$l]} ]
+		then
+			min=${unLuckyDayCollection[$l]}
+		fi
+	done
+
+	echo "Luckiest day: $max"
+	echo "Unluckiest day: $min"
+}
+
 for(( i=1; $i<=20; i++ ))
 	do
 		while(true)
@@ -29,8 +54,10 @@ for(( i=1; $i<=20; i++ ))
 		   	  then 
 				if [ $initialAmount -gt $maxAmount ]
 					then
-					    luckyDayCollection[ indexOfLuckyArray++ ]=$initialAmount
+					    $winDaysCounter++
+					    $luckyDayCollection[ indexOfLuckyArray++ ]=$initialAmount
 					else
+					    lostDaysCounter++
 					    unLuckyDayCollection[ indexOfUnLuckyArray++ ]=$initialAmount
 			 	fi
 				remainingMoney=$initialAmount
@@ -39,7 +66,11 @@ for(( i=1; $i<=20; i++ ))
 			fi
    		   done
 	done
-echo "after 20 days remaining money is $remainingMoney"
-echo "total amount won in this month is $wonAmount $ and lost $lostAmount $"
+
+
 echo ${luckyDayCollection[@]}
 echo ${unLuckyDayCollection[@]} 
+
+echo "total amount won in this month is $wonAmount $ and lost $lostAmount $"
+
+luckiestUnluckiestDay $luckiestDayCollection $unLuckyDayCollection
