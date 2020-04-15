@@ -67,6 +67,12 @@ for(( i=1; $i<=20; i++ ))
    		   done
 	done
 
+if [ wonAmount -gt lostAmount ]
+	then
+	    echo "You have won most of the days....u can play next month"
+	else
+	    echo "you have lost most of the days...u better stop playing next playing"
+fi
 
 echo ${luckyDayCollection[@]}
 echo ${unLuckyDayCollection[@]} 
